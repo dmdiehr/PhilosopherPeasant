@@ -9,5 +9,7 @@ namespace PhilosopherPeasant.Models
     // Add profile data for application users by adding properties to the ApplicationUser class
     public class ApplicationUser : IdentityUser
     {
+        public DateTime StartDate;
+        public virtual ICollection<Comment> Comments { get; set; }
     }
 }
