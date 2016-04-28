@@ -1,0 +1,27 @@
+﻿﻿@{
+    ViewData["Title"] = "";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@model PhilosopherPeasant.Models.Article
+<h2>Create Article</h2>
+
+
+@using (Html.BeginForm())
+{
+    @Html.LabelFor(model => model.Title)
+    @Html.EditorFor(model => model.Title)
+
+    @Html.LabelFor(model => model.Body)
+    @Html.EditorFor(model => model.Body)
+
+    @Html.LabelFor(model => model.PublishDate)
+    @Html.EditorFor(model => model.PublishDate)
+
+    @Html.LabelFor(model => model.WriterId, "Sales Person")
+    @Html.DropDownList("WriterId")
+
+    <input type="submit" value="Add new task" />
+}
+
+@Html.ActionLink("Back to List", "Index")

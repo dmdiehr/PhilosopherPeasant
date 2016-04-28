@@ -1,0 +1,24 @@
+﻿@model PhilosopherPeasant.Models.Writer
+    ﻿
+@{
+    ViewData["Title"] = "Writer Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Create Writer</h2>
+
+@using (Html.BeginForm())
+{
+    <p>@Html.EditorFor(model => model.Name, new { htmlAttributes = new { placeholder = "Name" } })</p>
+
+    <p>@Html.EditorFor(model => model.PublicEmail, new { htmlAttributes = new { placeholder = "Email" } })</p>
+
+    <p>@Html.EditorFor(model => model.Bio, new { htmlAttributes = new { placeholder = "Bio" } })</p>
+
+    <p>@Html.EditorFor(model => model.ImageLink, new { htmlAttributes = new { placeholder = "Image Link" } })</p>
+
+
+<input type="submit" value="Add Writer" />
+}
+
+@Html.ActionLink("Back to List", "Index")

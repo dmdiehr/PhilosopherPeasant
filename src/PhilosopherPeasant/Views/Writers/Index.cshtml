@@ -1,0 +1,26 @@
+﻿﻿@{
+    ViewData["Title"] = "Writers Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@model IEnumerable<PhilosopherPeasant.Models.Writer>
+
+<p>@Html.ActionLink("Add new writer", "Create")</p>
+
+@if(Model.Count()==0)
+{
+    <h2>No Writers Added Yet.</h2>
+}
+
+@foreach (var writer in Model)
+{
+    <p>@Html.DisplayFor(modelItem => writer.Name)</p>
+
+    <p>
+        @Html.ActionLink("Edit", "Edit", new { id = writer.WriterId }) |
+        @using (Html.BeginForm("Delete", "Writers", new { id = writer.WriterId }))
+        {
+            <input type="submit" value="Delete" />
+        }
+    </p>
+}
