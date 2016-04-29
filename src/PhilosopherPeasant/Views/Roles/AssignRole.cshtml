@@ -25,7 +25,7 @@
 
     <h3>Roles for @ViewBag.User.UserName </h3>
     <ul>
-        @using (Html.BeginForm("DeleteFromUser", "Roles", FormMethod.Post))
+        @using (Html.BeginForm("RemoveRole", "Roles", FormMethod.Post))
         {
             <p>@Html.HiddenFor(m => username)</p>
             foreach (var s in ViewBag.RolesForThisUser)
@@ -37,7 +37,7 @@
     if (ViewBag.Roles.Count > 0)
      {
          <div >
-             @using (Html.BeginForm("AddToUser", "Roles", FormMethod.Post))
+             @using (Html.BeginForm("AssignRole", "Roles", FormMethod.Post))
              {
                  <p>@Html.HiddenFor(m => username)</p>
                  <p>Add Role: @Html.DropDownList("RoleName", new SelectList(ViewBag.Roles))</p>

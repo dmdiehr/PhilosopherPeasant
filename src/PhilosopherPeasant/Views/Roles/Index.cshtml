@@ -7,7 +7,7 @@
 {
     <div>
         @s.ToString() | <span onclick="return confirm('are you sure you delete you?')">
-            <a href="/Roles/Delete?RoleName=@s.ToString()">Delete</a> 
-        </span> | <a href="/Roles/Edit?RoleName=@s.ToString()">Edit</a>
+            <a href="/Roles/DeleteRole?RoleName=@s.ToString()">Delete</a> 
+        </span> | <a href="/Roles/EditRole?RoleName=@s.ToString()">Edit</a>
     </div>
 }

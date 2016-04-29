@@ -10,7 +10,7 @@ using PhilosopherPeasant.Models;
 
 namespace PhilosopherPeasant.Controllers
 {
-    //[Authorize(Roles = "Admin")]
+    [Authorize(Roles = "Admin")]
     public class RolesController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -27,20 +27,20 @@ namespace PhilosopherPeasant.Controllers
             return View("Index", _context.Roles.ToList());
         }
 
-        public IActionResult Create()
+        public IActionResult CreateRole()
         {
             return View();
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Create(FormCollection collection)
+        public IActionResult CreateRole(FormCollection collection)
         {
             _context.Roles.Add(new IdentityRole(Request.Form["RoleName"]));
             _context.SaveChanges();
             return RedirectToAction("Index");
         }
-        public IActionResult Delete(string roleName)
+        public IActionResult DeleteRole(string roleName)
         {
             var role = _context.Roles.FirstOrDefault(m => m.Name == roleName);
             if (role != null)
@@ -62,7 +62,46 @@ namespace PhilosopherPeasant.Controllers
         public IActionResult Assign()
         {
             ViewBag.Users = new SelectList(_userManager.Users.ToList());
-            return View();
+            return View("AssignRole");
+        }
+
+        public IActionResult AssignRole(string username, string roleName)
+        {
+            var user = GetUser(username);
+            var thing = _userManager.AddToRoleAsync(user, roleName).Result;
+            return GetRoles(username);
+        }
+
+        [HttpPost]
+        public IActionResult RemoveRole(string username, string roleName)
+        {
+            var thing = _userManager.RemoveFromRoleAsync(GetUser(username), roleName).Result;
+            return GetRoles(username);
+        }
+
+
+        [HttpGet]
+        public IActionResult EditRole(string roleName)
+        {
+            ViewData["roleName"] = roleName;
+            return View("EditRoleName");
+        }
+
+        [HttpPost]
+        public IActionResult EditRole()
+        {
+            var role = _context.Roles.FirstOrDefault(m => m.Name == Request.Form["role-name"]);
+            role.Name = Request.Form["edit-role"];
+            _context.Roles.Update(role);
+            _context.SaveChanges();
+            return RedirectToAction("Index");
+        }
+
+        //////////////////////////////Helper Methods//////////////////////
+
+        public ApplicationUser GetUser(string username)
+        {
+            return _userManager.Users.FirstOrDefault(m => m.UserName == username);
         }
 
         [HttpPost]
@@ -92,43 +131,7 @@ namespace PhilosopherPeasant.Controllers
             }
             ViewBag.Users = new SelectList(_userManager.Users.ToList());
             ViewBag.Roles = roles;
-            return View("Assign");
-        }
-
-        public IActionResult AddToUser(string username, string roleName)
-        {
-            var user = GetUser(username);
-            var thing = _userManager.AddToRoleAsync(user, roleName).Result;
-            return GetRoles(username);
-        }
-
-        [HttpPost]
-        public IActionResult DeleteFromUser(string username, string roleName)
-        {
-            var thing = _userManager.RemoveFromRoleAsync(GetUser(username), roleName).Result;
-            return GetRoles(username);
-        }
-
-        public ApplicationUser GetUser(string username)
-        {
-            return _userManager.Users.FirstOrDefault(m => m.UserName == username);
-        }
-
-        [HttpGet]
-        public IActionResult Edit(string roleName)
-        {
-            ViewData["roleName"] = roleName;
-            return View("Edit");
-        }
-
-        [HttpPost]
-        public IActionResult Edit()
-        {
-            var role = _context.Roles.FirstOrDefault(m => m.Name == Request.Form["role-name"]);
-            role.Name = Request.Form["edit-role"];
-            _context.Roles.Update(role);
-            _context.SaveChanges();
-            return RedirectToAction("Index");
+            return View("AssignRole");
         }
     }
 }
