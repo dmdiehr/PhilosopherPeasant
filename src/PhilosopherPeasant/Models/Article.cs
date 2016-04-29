@@ -21,10 +21,10 @@ namespace PhilosopherPeasant.Models
 
         public DateTime PublishDate { get; set; }
 
-        [ForeignKey("Writer")]
-        public int WriterId { get; set; }
+        [ForeignKey("Contributor")]
+        public int ContributorId { get; set; }
         [NotMapped]
-        public Writer Writer { get; set; }
+        public Contributor Contributor { get; set; }
 
         public virtual ICollection<Comment> Comments { get; set; }
 

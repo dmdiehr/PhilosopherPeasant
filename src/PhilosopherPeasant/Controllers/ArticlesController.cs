@@ -20,7 +20,7 @@ namespace PhilosopherPeasant.Controllers
         }
         public IActionResult Index(int id)
         {
-          var articles = db.Articles.Where(x => x.WriterId == id).Include(x => x.Writer).ToList();
+          var articles = db.Articles.Where(x => x.ContributorId == id).Include(x => x.Contributor).ToList();
 
           if(articles.Count >= 1)
           {
@@ -33,7 +33,7 @@ namespace PhilosopherPeasant.Controllers
         }
         public IActionResult Create()
         {
-            ViewBag.WriterId = new SelectList(db.Writers, "WriterId", "Name");
+            ViewBag.ContributorId = new SelectList(db.Contributors, "ContributorId", "Name");
 
             return View();
         }
@@ -43,13 +43,13 @@ namespace PhilosopherPeasant.Controllers
         {
             db.Articles.Add(article);
             db.SaveChanges();
-            return RedirectToAction("Index", "Writers");
+            return RedirectToAction("Index", "Contributors");
         }
         public IActionResult Edit(int id)
         {
             var thisArticle = db.Articles.FirstOrDefault(x => x.ArticleId == id);
 
-            ViewBag.WriterId = new SelectList(db.Writers, "WriterId", "Name");
+            ViewBag.ContributorId = new SelectList(db.Contributors, "ContributorId", "Name");
 
             return View(thisArticle);
         }
@@ -59,7 +59,7 @@ namespace PhilosopherPeasant.Controllers
         {
             db.Entry(article).State = EntityState.Modified;
             db.SaveChanges();
-            return RedirectToAction("Index", "Writers");
+            return RedirectToAction("Index", "Contributors");
         }
 
         [HttpPost]
@@ -68,7 +68,7 @@ namespace PhilosopherPeasant.Controllers
             var thisArticle = db.Articles.FirstOrDefault(x => x.ArticleId == id);
             db.Articles.Remove(thisArticle);
             db.SaveChanges();
-            return RedirectToAction("Index", "Writers");
+            return RedirectToAction("Index", "Contributors");
         }
     }
 }

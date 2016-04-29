@@ -1,11 +1,11 @@
-﻿@model PhilosopherPeasant.Models.Writer
+﻿@model PhilosopherPeasant.Models.Contributor
     ﻿
 @{
-    ViewData["Title"] = "Writer Create";
+    ViewData["Title"] = "Contributor Create";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Create Writer</h2>
+<h2>Create Contributor</h2>
 
 @using (Html.BeginForm())
 {
@@ -18,7 +18,7 @@
     <p>@Html.EditorFor(model => model.ImageLink, new { htmlAttributes = new { placeholder = "Image Link" } })</p>
 
 
-<input type="submit" value="Add Writer" />
+<input type="submit" value="Add Contributor" />
 }
 
 @Html.ActionLink("Back to List", "Index")

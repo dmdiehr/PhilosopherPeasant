@@ -1,15 +1,15 @@
-﻿@model PhilosopherPeasant.Models.Writer
+﻿@model PhilosopherPeasant.Models.Contributor
     ﻿
 @{
-    ViewData["Title"] = "Writer Create";
+    ViewData["Title"] = "Contributor Create";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Edit Writer</h2>
+<h2>Edit Contributor</h2>
 
 @using (Html.BeginForm())
 {
-    @Html.HiddenFor(model => model.WriterId)
+    @Html.HiddenFor(model => model.ContributorId)
 
     <p>@Html.EditorFor(model => model.Name, new { htmlAttributes = new { placeholder = "Name" } })</p>
 
@@ -23,7 +23,7 @@
 
 
 
-    <input type="submit" value="Add Writer" />
+    <input type="submit" value="Add Contributor" />
 }
 
 @Html.ActionLink("Back to List", "Index")

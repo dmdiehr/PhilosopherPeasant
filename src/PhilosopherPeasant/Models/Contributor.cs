@@ -8,11 +8,11 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace PhilosopherPeasant.Models
 {
-    [Table("Writers")]
-    public class Writer
+    [Table("Contributors")]
+    public class Contributor
     {
         [Key]
-        public int WriterId { get; set; }
+        public int ContributorId { get; set; }
 
         public string Name { get; set; }
         public string ImageLink { get; set; }
@@ -30,7 +30,7 @@ namespace PhilosopherPeasant.Models
         [NotMapped]
         public virtual ApplicationUser ApplicationUser {get; set;}
 
-        public Writer()
+        public Contributor()
         {
             Articles = new HashSet<Article>();
         }

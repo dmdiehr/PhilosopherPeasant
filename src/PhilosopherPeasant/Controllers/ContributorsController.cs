@@ -7,49 +7,47 @@ using Microsoft.Data.Entity;
 using PhilosopherPeasant.Models;
 using Microsoft.AspNet.Mvc.Rendering;
 
-// For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
-
 namespace PhilosopherPeasant.Controllers
 {
-    public class WritersController : Controller
+    public class ContributorsController : Controller
     {
         private ApplicationDbContext db;
-        public WritersController(ApplicationDbContext context)
+        public ContributorsController(ApplicationDbContext context)
         {
             db = context;
         }
 
         public IActionResult Index()
         {
-            return View(db.Writers.ToList());
+            return View(db.Contributors.ToList());
         }
         public IActionResult Create()
         {
           return View();
         }
         [HttpPost]
-        public IActionResult Create (Writer writer)
+        public IActionResult Create (Contributor contributor)
         {
-          db.Writers.Add(writer);
+          db.Contributors.Add(contributor);
           db.SaveChanges();
           return RedirectToAction("Index");
         }
         public IActionResult Edit(int id)
         {
-            var writer = db.Writers.FirstOrDefault(w => w.WriterId == id);
-            return View(writer);
+            var contributor = db.Contributors.FirstOrDefault(w => w.ContributorId == id);
+            return View(contributor);
         }
         [HttpPost]
-        public IActionResult Edit(Writer writer)
+        public IActionResult Edit(Contributor contributor)
         {
-            db.Entry(writer).State = Microsoft.Data.Entity.EntityState.Modified;
+            db.Entry(contributor).State = Microsoft.Data.Entity.EntityState.Modified;
             db.SaveChanges();
             return RedirectToAction("Index");
         }
         public IActionResult Delete(int id)
         {
-          var thisWriter = db.Writers.FirstOrDefault(w => w.WriterId == id);
-          db.Writers.Remove(thisWriter);
+          var thisContributor = db.Contributors.FirstOrDefault(w => w.ContributorId == id);
+          db.Contributors.Remove(thisContributor);
           db.SaveChanges();
           return RedirectToAction("Index");
         }

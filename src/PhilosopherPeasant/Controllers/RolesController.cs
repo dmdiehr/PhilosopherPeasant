@@ -10,6 +10,7 @@ using PhilosopherPeasant.Models;
 
 namespace PhilosopherPeasant.Controllers
 {
+    //[Authorize(Roles = "Chief")]
     public class RolesController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -21,13 +22,11 @@ namespace PhilosopherPeasant.Controllers
             _context = context;
         }
 
-        [Authorize(Roles = "Admin")]
         public IActionResult Index()
         {
             return View("Index", _context.Roles.ToList());
         }
 
-        [Authorize(Roles = "Admin")]
         public IActionResult Create()
         {
             return View();
@@ -35,15 +34,12 @@ namespace PhilosopherPeasant.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [Authorize(Roles = "Admin")]
         public IActionResult Create(FormCollection collection)
         {
             _context.Roles.Add(new IdentityRole(Request.Form["RoleName"]));
             _context.SaveChanges();
             return RedirectToAction("Index");
         }
-
-        [Authorize(Roles = "Admin")]
         public IActionResult Delete(string roleName)
         {
             var role = _context.Roles.FirstOrDefault(m => m.Name == roleName);
@@ -63,7 +59,6 @@ namespace PhilosopherPeasant.Controllers
             return RedirectToAction("Index");
         }
 
-        [Authorize(Roles = "Admin")]
         public IActionResult Assign()
         {
             ViewBag.Users = new SelectList(_userManager.Users.ToList());
@@ -72,7 +67,6 @@ namespace PhilosopherPeasant.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [Authorize(Roles = "Admin")]
         public IActionResult GetRoles(string user)
         {
             var usera = GetUser(user);
@@ -101,7 +95,6 @@ namespace PhilosopherPeasant.Controllers
             return View("Assign");
         }
 
-        [Authorize(Roles = "Admin")]
         public IActionResult AddToUser(string username, string roleName)
         {
             var user = GetUser(username);
@@ -110,21 +103,18 @@ namespace PhilosopherPeasant.Controllers
         }
 
         [HttpPost]
-        [Authorize(Roles = "Admin")]
         public IActionResult DeleteFromUser(string username, string roleName)
         {
             var thing = _userManager.RemoveFromRoleAsync(GetUser(username), roleName).Result;
             return GetRoles(username);
         }
 
-        [Authorize(Roles = "Admin")]
         public ApplicationUser GetUser(string username)
         {
             return _userManager.Users.FirstOrDefault(m => m.UserName == username);
         }
 
         [HttpGet]
-        [Authorize(Roles = "Admin")]
         public IActionResult Edit(string roleName)
         {
             ViewData["roleName"] = roleName;
@@ -132,7 +122,6 @@ namespace PhilosopherPeasant.Controllers
         }
 
         [HttpPost]
-        [Authorize(Roles = "Admin")]
         public IActionResult Edit()
         {
             var role = _context.Roles.FirstOrDefault(m => m.Name == Request.Form["role-name"]);

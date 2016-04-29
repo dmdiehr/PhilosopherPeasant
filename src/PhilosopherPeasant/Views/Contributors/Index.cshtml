@@ -1,0 +1,26 @@
+﻿﻿@{
+    ViewData["Title"] = "Contributors Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@model IEnumerable<PhilosopherPeasant.Models.Contributor>
+
+<p>@Html.ActionLink("Add new contributor", "Create")</p>
+
+@if(Model.Count()==0)
+{
+    <h2>No Contributors Added Yet.</h2>
+}
+
+@foreach (var contributor in Model)
+{
+    <p>@Html.DisplayFor(modelItem => contributor.Name)</p>
+
+    <p>
+        @Html.ActionLink("Edit", "Edit", new { id = contributor.ContributorId }) |
+        @using (Html.BeginForm("Delete", "Contributors", new { id = contributor.ContributorId }))
+        {
+            <input type="submit" value="Delete" />
+        }
+    </p>
+}
