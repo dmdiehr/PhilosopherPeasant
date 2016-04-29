@@ -10,7 +10,7 @@ using PhilosopherPeasant.Models;
 
 namespace PhilosopherPeasant.Controllers
 {
-    //[Authorize(Roles = "Chief")]
+    //[Authorize(Roles = "Admin")]
     public class RolesController : Controller
     {
         private readonly ApplicationDbContext _context;
