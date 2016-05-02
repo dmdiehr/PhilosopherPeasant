@@ -10,7 +10,7 @@ using PhilosopherPeasant.Models;
 
 namespace PhilosopherPeasant.Controllers
 {
-    [Authorize(Roles = "Admin")]
+    [Authorize(Roles = "Admin,Editor in chief")]
     public class RolesController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -24,9 +24,20 @@ namespace PhilosopherPeasant.Controllers
 
         public IActionResult Index()
         {
-            return View("Index", _context.Roles.ToList());
+            List<IdentityRole> roleList = _context.Roles.ToList();
+            List<IdentityRole> cloneRoleList = roleList.ToList();
+            foreach(var role in cloneRoleList)
+            {
+                if (role.Name == "Admin")
+                {
+                    roleList.Remove(role);
+                }
+            }
+
+            return View("Index", roleList);
         }
 
+        [Authorize(Roles = "Admin")]
         public IActionResult CreateRole()
         {
             return View();
@@ -61,7 +72,16 @@ namespace PhilosopherPeasant.Controllers
 
         public IActionResult Assign()
         {
-            ViewBag.Users = new SelectList(_userManager.Users.ToList());
+            List<ApplicationUser> userList = _userManager.Users.ToList();
+            List<ApplicationUser> userListClone = userList.ToList();
+            foreach(var user in userListClone)
+            {
+                if (user.UserName == "admin")
+                {
+                    userList.Remove(user);
+                }
+            }
+            ViewBag.Users = new SelectList(userList);
             return View("AssignRole");
         }
 
@@ -124,7 +144,7 @@ namespace PhilosopherPeasant.Controllers
                         add = false;
                     }
                 }
-                if (add)
+                if (add && r.Name!="Admin")
                 {
                     roles.Add(r.Name);
                 }

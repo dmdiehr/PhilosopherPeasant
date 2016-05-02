@@ -8,10 +8,9 @@ using Microsoft.AspNet.Authorization;
 
 namespace PhilosopherPeasant.Controllers
 {
-    [Authorize(Roles="Admin,Editor in chief, Editor, Writer")]
+    //[Authorize(Roles="Admin, Editor in chief, Editor, Writer")]
     public class AdminController : Controller
     {
-        // GET: /<controller>/
         public IActionResult Index()
         {
             return View();
