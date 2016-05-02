@@ -8,7 +8,7 @@ using Microsoft.AspNet.Authorization;
 
 namespace PhilosopherPeasant.Controllers
 {
-    [Authorize(Roles="Admin")]
+    [Authorize(Roles="Admin,Editor in chief, Editor, Writer")]
     public class AdminController : Controller
     {
         // GET: /<controller>/
