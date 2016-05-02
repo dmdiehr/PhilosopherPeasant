@@ -12,6 +12,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 EndProject
 Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "PhilosopherPeasant", "src\PhilosopherPeasant\PhilosopherPeasant.xproj", "{AD78FD4A-D02A-49AF-84CF-AB379E740F56}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{41EAF405-44E3-4A7C-8314-873E92EAD5EA}"
+EndProject
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "PhilosopherPeasant.Tests", "PhilosopherPeasant.Tests\PhilosopherPeasant.Tests.xproj", "{B77AE99F-C199-40C2-8A15-028756FAAEAB}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -22,11 +26,16 @@ Global
 		{AD78FD4A-D02A-49AF-84CF-AB379E740F56}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AD78FD4A-D02A-49AF-84CF-AB379E740F56}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AD78FD4A-D02A-49AF-84CF-AB379E740F56}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B77AE99F-C199-40C2-8A15-028756FAAEAB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B77AE99F-C199-40C2-8A15-028756FAAEAB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B77AE99F-C199-40C2-8A15-028756FAAEAB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B77AE99F-C199-40C2-8A15-028756FAAEAB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{AD78FD4A-D02A-49AF-84CF-AB379E740F56} = {F53867F5-5668-425A-9D81-28A7F53045B9}
+		{B77AE99F-C199-40C2-8A15-028756FAAEAB} = {41EAF405-44E3-4A7C-8314-873E92EAD5EA}
 	EndGlobalSection
 EndGlobal
