@@ -9,9 +9,9 @@ namespace PhilosopherPeasant.Models
 {
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
-        public DbSet<Contributor> Contributors { get; set; }
-        public DbSet<Article> Articles { get; set; }
-        public DbSet<Comment> Comments { get; set; }
+        public virtual DbSet<Contributor> Contributors { get; set; }
+        public virtual DbSet<Article> Articles { get; set; }
+        public virtual DbSet<Comment> Comments { get; set; }
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
