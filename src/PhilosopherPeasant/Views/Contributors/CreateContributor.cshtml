@@ -16,8 +16,12 @@
 
     <p>@Html.EditorFor(model => model.ImageLink, new { htmlAttributes = new { placeholder = "Image Link" } })</p>
 
+    <p>Assign to username : @Html.DropDownList("user", new SelectList(ViewBag.Users))</p>
+    <p>Assign to role: @Html.DropDownList("role", new SelectList(ViewBag.Roles))</p>
 
-<input type="submit" value="Add Contributor" />
+    <input type="submit" value="Add Contributor" />
 }
 
 @Html.ActionLink("Back to List", "Index")
+
+

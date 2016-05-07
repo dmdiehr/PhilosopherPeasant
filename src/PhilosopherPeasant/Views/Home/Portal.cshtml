@@ -12,7 +12,7 @@
     @if (User.IsInRole("Editor in chief"))
     {
         <div>
-            <a asp-controller="Index" asp-action="Contributors">Manage Contributors</a>
+            <a asp-controller="Contributors" asp-action="Index">Manage Contributors</a>
         </div>
     }
     @if (User.IsInRole("Editor in chief") || User.IsInRole("Editor"))

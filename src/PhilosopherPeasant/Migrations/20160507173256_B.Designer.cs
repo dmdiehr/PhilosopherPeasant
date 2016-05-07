@@ -8,9 +8,10 @@ using PhilosopherPeasant.Models;
 namespace PhilosopherPeasant.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20160507173256_B")]
+    partial class B
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
             modelBuilder
                 .HasAnnotation("ProductVersion", "7.0.0-rc1-16348")
@@ -206,8 +207,6 @@ namespace PhilosopherPeasant.Migrations
                     b.Property<string>("PublicEmail");
 
                     b.Property<string>("Role");
-
-                    b.Property<DateTime>("StartDate");
 
                     b.HasKey("ContributorId");
 

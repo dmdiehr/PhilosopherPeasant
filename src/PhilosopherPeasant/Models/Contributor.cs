@@ -25,10 +25,13 @@ namespace PhilosopherPeasant.Models
 
         public virtual ICollection<Article> Articles { get; set; }
         public virtual ApplicationUser ApplicationUser {get; set;}
+        public virtual string Role { get; set; }
+        public virtual DateTime StartDate { get; set; }
 
         public Contributor()
         {
             Articles = new HashSet<Article>();
+            ImageLink = "https://encrypted-tbn1.gstatic.com/images?q=tbn:ANd9GcRjMO_geFIxZwVKfRT44hW-Jw3FT0Oe8BW1x2e24ePYwu8XbgIE1g";
         }
     }
 }
