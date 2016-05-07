@@ -8,8 +8,8 @@ using PhilosopherPeasant.Models;
 namespace PhilosopherPeasant.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20160507010533_B")]
-    partial class B
+    [Migration("20160507041841_A")]
+    partial class A
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -178,13 +178,13 @@ namespace PhilosopherPeasant.Migrations
                     b.Property<int>("CommentId")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<int>("ArticleId");
+                    b.Property<string>("ApplicationUserId");
+
+                    b.Property<int?>("ArticleArticleId");
 
                     b.Property<DateTime>("PostDateTime");
 
                     b.Property<string>("Text");
-
-                    b.Property<string>("UserId");
 
                     b.HasKey("CommentId");
 
@@ -196,7 +196,7 @@ namespace PhilosopherPeasant.Migrations
                     b.Property<int>("ContributorId")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<int>("ApplicationUserId");
+                    b.Property<string>("ApplicationUserId");
 
                     b.Property<string>("Bio");
 
@@ -252,13 +252,20 @@ namespace PhilosopherPeasant.Migrations
 
             modelBuilder.Entity("PhilosopherPeasant.Models.Comment", b =>
                 {
-                    b.HasOne("PhilosopherPeasant.Models.Article")
-                        .WithMany()
-                        .HasForeignKey("ArticleId");
-
                     b.HasOne("PhilosopherPeasant.Models.ApplicationUser")
                         .WithMany()
-                        .HasForeignKey("UserId");
+                        .HasForeignKey("ApplicationUserId");
+
+                    b.HasOne("PhilosopherPeasant.Models.Article")
+                        .WithMany()
+                        .HasForeignKey("ArticleArticleId");
+                });
+
+            modelBuilder.Entity("PhilosopherPeasant.Models.Contributor", b =>
+                {
+                    b.HasOne("PhilosopherPeasant.Models.ApplicationUser")
+                        .WithMany()
+                        .HasForeignKey("ApplicationUserId");
                 });
         }
     }

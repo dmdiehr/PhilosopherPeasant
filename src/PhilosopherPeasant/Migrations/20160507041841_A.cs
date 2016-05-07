@@ -5,7 +5,7 @@ using Microsoft.Data.Entity.Metadata;
 
 namespace PhilosopherPeasant.Migrations
 {
-    public partial class initial : Migration
+    public partial class A : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -39,28 +39,13 @@ namespace PhilosopherPeasant.Migrations
                     PhoneNumber = table.Column<string>(nullable: true),
                     PhoneNumberConfirmed = table.Column<bool>(nullable: false),
                     SecurityStamp = table.Column<string>(nullable: true),
+                    StartDate = table.Column<DateTime>(nullable: false),
                     TwoFactorEnabled = table.Column<bool>(nullable: false),
                     UserName = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_ApplicationUser", x => x.Id);
-                });
-            migrationBuilder.CreateTable(
-                name: "Contributors",
-                columns: table => new
-                {
-                    ContributorId = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    ApplicationUserId = table.Column<int>(nullable: false),
-                    Bio = table.Column<string>(nullable: true),
-                    ImageLink = table.Column<string>(nullable: true),
-                    Name = table.Column<string>(nullable: true),
-                    PublicEmail = table.Column<string>(nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Contributor", x => x.ContributorId);
                 });
             migrationBuilder.CreateTable(
                 name: "AspNetRoleClaims",
@@ -145,14 +130,39 @@ namespace PhilosopherPeasant.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
             migrationBuilder.CreateTable(
+                name: "Contributors",
+                columns: table => new
+                {
+                    ContributorId = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    ApplicationUserId = table.Column<string>(nullable: true),
+                    Bio = table.Column<string>(nullable: true),
+                    ImageLink = table.Column<string>(nullable: true),
+                    Name = table.Column<string>(nullable: true),
+                    PublicEmail = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Contributor", x => x.ContributorId);
+                    table.ForeignKey(
+                        name: "FK_Contributor_ApplicationUser_ApplicationUserId",
+                        column: x => x.ApplicationUserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+            migrationBuilder.CreateTable(
                 name: "Articles",
                 columns: table => new
                 {
                     ArticleId = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    Abstract = table.Column<string>(nullable: true),
+                    Approved = table.Column<bool>(nullable: false),
                     Body = table.Column<string>(nullable: true),
                     ContributorId = table.Column<int>(nullable: false),
                     PublishDate = table.Column<DateTime>(nullable: false),
+                    Reviewed = table.Column<bool>(nullable: false),
                     Title = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
@@ -171,25 +181,25 @@ namespace PhilosopherPeasant.Migrations
                 {
                     CommentId = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    ArticleId = table.Column<int>(nullable: false),
+                    ApplicationUserId = table.Column<string>(nullable: true),
+                    ArticleArticleId = table.Column<int>(nullable: true),
                     PostDateTime = table.Column<DateTime>(nullable: false),
-                    Text = table.Column<string>(nullable: true),
-                    UserId = table.Column<string>(nullable: true)
+                    Text = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Comment", x => x.CommentId);
                     table.ForeignKey(
-                        name: "FK_Comment_Article_ArticleId",
-                        column: x => x.ArticleId,
-                        principalTable: "Articles",
-                        principalColumn: "ArticleId",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_Comment_ApplicationUser_UserId",
-                        column: x => x.UserId,
+                        name: "FK_Comment_ApplicationUser_ApplicationUserId",
+                        column: x => x.ApplicationUserId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Comment_Article_ArticleArticleId",
+                        column: x => x.ArticleArticleId,
+                        principalTable: "Articles",
+                        principalColumn: "ArticleId",
                         onDelete: ReferentialAction.Restrict);
                 });
             migrationBuilder.CreateIndex(
@@ -215,8 +225,8 @@ namespace PhilosopherPeasant.Migrations
             migrationBuilder.DropTable("Comments");
             migrationBuilder.DropTable("AspNetRoles");
             migrationBuilder.DropTable("Articles");
-            migrationBuilder.DropTable("AspNetUsers");
             migrationBuilder.DropTable("Contributors");
+            migrationBuilder.DropTable("AspNetUsers");
         }
     }
 }

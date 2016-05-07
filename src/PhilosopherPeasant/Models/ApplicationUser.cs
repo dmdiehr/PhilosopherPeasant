@@ -11,5 +11,11 @@ namespace PhilosopherPeasant.Models
     {
         public DateTime StartDate { get; set; }
         public virtual ICollection<Comment> Comments { get; set; }
+
+        public ApplicationUser()
+        {
+            Comments = new HashSet<Comment>();
+            StartDate = DateTime.Today;
+        }
     }
 }
