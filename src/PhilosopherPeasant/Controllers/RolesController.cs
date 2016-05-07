@@ -13,18 +13,18 @@ namespace PhilosopherPeasant.Controllers
     [Authorize(Roles = "Admin,Editor in chief")]
     public class RolesController : Controller
     {
-        private readonly ApplicationDbContext _context;
+        private readonly ApplicationDbContext _db;
         private readonly UserManager<ApplicationUser> _userManager;
 
         public RolesController(ApplicationDbContext context, UserManager<ApplicationUser> userManager)
         {
             _userManager = userManager;
-            _context = context;
+            _db = context;
         }
 
         public IActionResult Index()
         {
-            List<IdentityRole> roleList = _context.Roles.ToList();
+            List<IdentityRole> roleList = _db.Roles.ToList();
             List<IdentityRole> cloneRoleList = roleList.ToList();
             foreach(var role in cloneRoleList)
             {
@@ -47,19 +47,19 @@ namespace PhilosopherPeasant.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult CreateRole(FormCollection collection)
         {
-            _context.Roles.Add(new IdentityRole(Request.Form["RoleName"]));
-            _context.SaveChanges();
+            _db.Roles.Add(new IdentityRole(Request.Form["RoleName"]));
+            _db.SaveChanges();
             return RedirectToAction("Index");
         }
         public IActionResult DeleteRole(string roleName)
         {
-            var role = _context.Roles.FirstOrDefault(m => m.Name == roleName);
+            var role = _db.Roles.FirstOrDefault(m => m.Name == roleName);
             if (role != null)
             {
                 try
                 {
-                    _context.Roles.Remove(role);
-                    _context.SaveChanges();
+                    _db.Roles.Remove(role);
+                    _db.SaveChanges();
                 }
                 catch
                 {
@@ -110,10 +110,10 @@ namespace PhilosopherPeasant.Controllers
         [HttpPost]
         public IActionResult EditRole()
         {
-            var role = _context.Roles.FirstOrDefault(m => m.Name == Request.Form["role-name"]);
+            var role = _db.Roles.FirstOrDefault(m => m.Name == Request.Form["role-name"]);
             role.Name = Request.Form["edit-role"];
-            _context.Roles.Update(role);
-            _context.SaveChanges();
+            _db.Roles.Update(role);
+            _db.SaveChanges();
             return RedirectToAction("Index");
         }
 
@@ -132,7 +132,7 @@ namespace PhilosopherPeasant.Controllers
             ViewBag.User = usera;
             var userRoles = _userManager.GetRolesAsync(usera).Result;
             ViewBag.RolesForThisUser = userRoles;
-            var preroles = _context.Roles.ToList();
+            var preroles = _db.Roles.ToList();
             var roles = new List<string>();
             foreach (var r in preroles)
             {

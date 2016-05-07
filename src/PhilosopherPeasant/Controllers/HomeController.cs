@@ -3,14 +3,21 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNet.Mvc;
+using Microsoft.Data.Entity;
+using PhilosopherPeasant.Models;
 
 namespace PhilosopherPeasant.Controllers
 {
     public class HomeController : Controller
     {
-        public IActionResult Index()
+        private ApplicationDbContext _db;
+        public HomeController(ApplicationDbContext context)
         {
-            return View();
+            _db = context;
+        }
+        public IActionResult Index()
+        {   
+            return View(_db.Articles.ToList());
         }
 
         public IActionResult About()
@@ -24,6 +31,11 @@ namespace PhilosopherPeasant.Controllers
         {
             ViewData["Message"] = "Your contact page.";
 
+            return View();
+        }
+        
+        public IActionResult Portal()
+        {
             return View();
         }
 

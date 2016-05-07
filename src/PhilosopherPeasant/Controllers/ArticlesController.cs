@@ -13,14 +13,14 @@ namespace PhilosopherPeasant.Controllers
 {
     public class ArticlesController : Controller
     {
-        private ApplicationDbContext db;
+        private ApplicationDbContext _db;
         public ArticlesController(ApplicationDbContext context)
         {
-            db = context;
+            _db = context;
         }
         public IActionResult Index(int id)
         {
-          var articles = db.Articles.Where(x => x.ContributorId == id).Include(x => x.Contributor).ToList();
+          var articles = _db.Articles.Where(x => x.ContributorId == id).Include(x => x.Contributor).ToList();
 
           if(articles.Count >= 1)
           {
@@ -31,44 +31,39 @@ namespace PhilosopherPeasant.Controllers
               return View();
           }
         }
-        public IActionResult Create()
+        public IActionResult CreateArticle()
         {
-            ViewBag.ContributorId = new SelectList(db.Contributors, "ContributorId", "Name");
-
-            return View();
+           return View();
         }
 
         [HttpPost]
-        public IActionResult Create(Article article)
+        public IActionResult CreateArticle(Article article)
         {
-            db.Articles.Add(article);
-            db.SaveChanges();
-            return RedirectToAction("Index", "Contributors");
+            _db.Articles.Add(article);
+            _db.SaveChanges();
+            return RedirectToAction("Portal", "Home");
         }
-        public IActionResult Edit(int id)
+        public IActionResult EditArticle(int id)
         {
-            var thisArticle = db.Articles.FirstOrDefault(x => x.ArticleId == id);
-
-            ViewBag.ContributorId = new SelectList(db.Contributors, "ContributorId", "Name");
-
+            var thisArticle = _db.Articles.FirstOrDefault(x => x.ArticleId == id);
             return View(thisArticle);
         }
 
         [HttpPost]
-        public IActionResult Edit(Article article)
+        public IActionResult EditArticle(Article article)
         {
-            db.Entry(article).State = EntityState.Modified;
-            db.SaveChanges();
-            return RedirectToAction("Index", "Contributors");
+            _db.Entry(article).State = EntityState.Modified;
+            _db.SaveChanges();
+            return RedirectToAction("Portal", "Home");
         }
 
         [HttpPost]
-        public IActionResult Delete(int id)
+        public IActionResult DeleteArticle(int id)
         {
-            var thisArticle = db.Articles.FirstOrDefault(x => x.ArticleId == id);
-            db.Articles.Remove(thisArticle);
-            db.SaveChanges();
-            return RedirectToAction("Index", "Contributors");
+            var thisArticle = _db.Articles.FirstOrDefault(x => x.ArticleId == id);
+            _db.Articles.Remove(thisArticle);
+            _db.SaveChanges();
+            return RedirectToAction("Portal", "Home");
         }
     }
 }

@@ -24,10 +24,6 @@ namespace PhilosopherPeasant.Models
         public string PublicEmail { get; set; }
 
         public virtual ICollection<Article> Articles { get; set; }
-
-        [ForeignKey("ApplicationUser")]
-        public int ApplicationUserId { get; set; }
-        [NotMapped]
         public virtual ApplicationUser ApplicationUser {get; set;}
 
         public Contributor()

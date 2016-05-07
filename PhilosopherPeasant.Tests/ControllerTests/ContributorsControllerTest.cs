@@ -84,21 +84,21 @@ namespace PhilosopherPeasant.Tests
         //    // Assert
         //    Assert.Contains<Contributor>(testContributor, collection);
         //}
-        [Fact]
-        public void DB_CreateNewEntry_Test()
-        {
-            // Arrange
-            ContributorsController controller = new ContributorsController(db);
-            Contributor testContributor = new Contributor();
-            testContributor.Name = "TestDB Contributor";
+        //[Fact]
+        //public void DB_CreateNewEntry_Test()
+        //{
+        //    // Arrange
+        //    ContributorsController controller = new ContributorsController(db);
+        //    Contributor testContributor = new Contributor();
+        //    testContributor.Name = "TestDB Contributor";
 
-            // Act
-            controller.Create(testContributor);
-            var collection = (controller.Index() as ViewResult).ViewData.Model as IEnumerable<Contributor>;
+        //    // Act
+        //    controller.Create(testContributor);
+        //    var collection = (controller.Index() as ViewResult).ViewData.Model as IEnumerable<Contributor>;
 
-            // Assert
-            Assert.Contains<Contributor>(testContributor, collection);
-        }
+        //    // Assert
+        //    Assert.Contains<Contributor>(testContributor, collection);
+        //}
         public void Dispose()
         {
             db.DeleteAll();

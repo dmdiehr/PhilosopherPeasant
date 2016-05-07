@@ -1,6 +1,7 @@
-﻿@{
-    ViewData["Title"] = "Admin Page";
+@{
+    ViewData["Title"] = "Staff Portal";
 }
+
 <div class="body-content">
     @if (User.IsInRole("Admin"))
     {
@@ -11,7 +12,7 @@
     @if (User.IsInRole("Editor in chief"))
     {
         <div>
-            <p>Manage Contributors</p>
+            <a asp-controller="Index" asp-action="Contributors">Manage Contributors</a>
         </div>
     }
     @if (User.IsInRole("Editor in chief") || User.IsInRole("Editor"))
@@ -25,6 +26,7 @@
         <div>
             <p>Manage My Profile</p>
             <p>Manage My Articles</p>
+            <p>Submit Article</p>
         </div>
     }
 </div>

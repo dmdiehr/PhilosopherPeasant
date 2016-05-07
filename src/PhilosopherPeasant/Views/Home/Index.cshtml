@@ -2,5 +2,19 @@
     ViewData["Title"] = "Home Page";
 }
 
-<img src="~/images/diogenes.png" alt="" class="img-responsive" />
+@model IEnumerable<PhilosopherPeasant.Models.Article>
+    
+@foreach(var article in Model)
+{
+    <h3>@article.Title</h3>
+    <p>@article.Abstract</p>
+    <p>@article.PublishDate</p>
+}
+
+@if(Model.Count()<1)
+{
+    <h2>Oops!</h2>
+    <p>This is embarrassing. We have somehow misplaced all our brilliant articles.</p>
+}
+     
 

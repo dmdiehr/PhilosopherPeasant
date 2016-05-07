@@ -8,9 +8,10 @@ using PhilosopherPeasant.Models;
 namespace PhilosopherPeasant.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20160507011112_C")]
+    partial class C
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
             modelBuilder
                 .HasAnnotation("ProductVersion", "7.0.0-rc1-16348")
@@ -195,7 +196,7 @@ namespace PhilosopherPeasant.Migrations
                     b.Property<int>("ContributorId")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<string>("ApplicationUserId");
+                    b.Property<int>("ApplicationUserId");
 
                     b.Property<string>("Bio");
 
@@ -258,13 +259,6 @@ namespace PhilosopherPeasant.Migrations
                     b.HasOne("PhilosopherPeasant.Models.Article")
                         .WithMany()
                         .HasForeignKey("ArticleArticleId");
-                });
-
-            modelBuilder.Entity("PhilosopherPeasant.Models.Contributor", b =>
-                {
-                    b.HasOne("PhilosopherPeasant.Models.ApplicationUser")
-                        .WithMany()
-                        .HasForeignKey("ApplicationUserId");
                 });
         }
     }

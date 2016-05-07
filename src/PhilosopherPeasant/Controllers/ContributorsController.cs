@@ -6,50 +6,64 @@ using Microsoft.AspNet.Mvc;
 using Microsoft.Data.Entity;
 using PhilosopherPeasant.Models;
 using Microsoft.AspNet.Mvc.Rendering;
+using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.EntityFramework;
+using Microsoft.AspNet.Authorization;
 
 namespace PhilosopherPeasant.Controllers
 {
     public class ContributorsController : Controller
     {
-        private ApplicationDbContext db;
-        public ContributorsController(ApplicationDbContext context)
+        private ApplicationDbContext _db;
+        private readonly UserManager<ApplicationUser> _userManager;
+
+        public ContributorsController(ApplicationDbContext context, UserManager<ApplicationUser> userManager)
         {
-            db = context;
+            _db = context;
+            _userManager = userManager;
         }
    
+        [Authorize(Roles = "Editor in chief")]
         public IActionResult Index()
         {
-            return View(db.Contributors.ToList());
+            return View(_db.Contributors.ToList());
         }
-        public IActionResult Create()
+        [Authorize(Roles = "Editor in chief")]
+        public IActionResult CreateContributor()
         {
           return View();
         }
+        [Authorize(Roles = "Editor in chief")]
         [HttpPost]
-        public IActionResult Create (Contributor contributor)
+        public IActionResult CreateContributor (Contributor contributor)
         {
-          db.Contributors.Add(contributor);
-          db.SaveChanges();
+          _db.Contributors.Add(contributor);
+          _db.SaveChanges();
           return RedirectToAction("Index");
         }
-        public IActionResult Edit(int id)
+        [Authorize(Roles = "Editor in chief,Editor,Writer")]
+        public IActionResult EditContributor(int id)
         {
-            var contributor = db.Contributors.FirstOrDefault(w => w.ContributorId == id);
+            var contributor = _db.Contributors.FirstOrDefault(w => w.ContributorId == id);
             return View(contributor);
         }
+        [Authorize(Roles = "Editor in chief,Editor,Writer")]
         [HttpPost]
-        public IActionResult Edit(Contributor contributor)
+        public IActionResult EditContributor(Contributor contributor)
         {
-            db.Entry(contributor).State = Microsoft.Data.Entity.EntityState.Modified;
-            db.SaveChanges();
+            _db.Entry(contributor).State = Microsoft.Data.Entity.EntityState.Modified;
+            _db.SaveChanges();
             return RedirectToAction("Index");
         }
-        public IActionResult Delete(int id)
+        public IActionResult DeleteContributor(int id)
         {
-          var thisContributor = db.Contributors.FirstOrDefault(w => w.ContributorId == id);
-          db.Contributors.Remove(thisContributor);
-          db.SaveChanges();
-          return RedirectToAction("Index");
+            var thisContributor = _db.Contributors.FirstOrDefault(c => c.ContributorId == id);
+            var thisApplicationUser = thisContributor.ApplicationUser;
+            var thisApplicationUserRoles = _userManager.GetRolesAsync(thisApplicationUser).Result;
+            _userManager.RemoveFromRolesAsync(thisContributor.ApplicationUser, thisApplicationUserRoles);
+            _db.Contributors.Remove(thisContributor);
+            _db.SaveChanges();
+            return RedirectToAction("Index");
         }
     }
 }

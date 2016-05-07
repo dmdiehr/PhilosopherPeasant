@@ -12,12 +12,8 @@ namespace PhilosopherPeasant.Models
 
         public string Text { get; set; }
         public DateTime PostDateTime { get; set; }
-        public virtual ApplicationUser User { get; set; }
-
-        [ForeignKey("Article")]
-        public int ArticleId { get; set; }
-        [NotMapped]
-        public Article Article { get; set; }
+        public virtual ApplicationUser ApplicationUser { get; set; }
+        public virtual Article Article { get; set; }
     }
 }
 
