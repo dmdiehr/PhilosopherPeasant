@@ -211,6 +211,8 @@ namespace PhilosopherPeasant.Migrations
 
                     b.Property<DateTime>("StartDate");
 
+                    b.Property<string>("UserName");
+
                     b.HasKey("ContributorId");
 
                     b.HasAnnotation("Relational:TableName", "Contributors");

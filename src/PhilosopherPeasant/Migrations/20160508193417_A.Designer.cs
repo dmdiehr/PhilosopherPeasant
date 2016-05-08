@@ -8,7 +8,7 @@ using PhilosopherPeasant.Models;
 namespace PhilosopherPeasant.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20160507041841_A")]
+    [Migration("20160508193417_A")]
     partial class A
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -113,6 +113,8 @@ namespace PhilosopherPeasant.Migrations
 
                     b.Property<bool>("EmailConfirmed");
 
+                    b.Property<bool>("IsContributor");
+
                     b.Property<bool>("LockoutEnabled");
 
                     b.Property<DateTimeOffset?>("LockoutEnd");
@@ -205,6 +207,12 @@ namespace PhilosopherPeasant.Migrations
                     b.Property<string>("Name");
 
                     b.Property<string>("PublicEmail");
+
+                    b.Property<string>("Role");
+
+                    b.Property<DateTime>("StartDate");
+
+                    b.Property<string>("UserName");
 
                     b.HasKey("ContributorId");
 

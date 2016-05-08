@@ -4,7 +4,7 @@ using Microsoft.Data.Entity.Migrations;
 
 namespace PhilosopherPeasant.Migrations
 {
-    public partial class B : Migration
+    public partial class A : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -14,10 +14,6 @@ namespace PhilosopherPeasant.Migrations
             migrationBuilder.DropForeignKey(name: "FK_IdentityUserRole<string>_IdentityRole_RoleId", table: "AspNetUserRoles");
             migrationBuilder.DropForeignKey(name: "FK_IdentityUserRole<string>_ApplicationUser_UserId", table: "AspNetUserRoles");
             migrationBuilder.DropForeignKey(name: "FK_Article_Contributor_ContributorId", table: "Articles");
-            migrationBuilder.AddColumn<string>(
-                name: "Role",
-                table: "Contributors",
-                nullable: true);
             migrationBuilder.AddForeignKey(
                 name: "FK_IdentityRoleClaim<string>_IdentityRole_RoleId",
                 table: "AspNetRoleClaims",
@@ -70,7 +66,6 @@ namespace PhilosopherPeasant.Migrations
             migrationBuilder.DropForeignKey(name: "FK_IdentityUserRole<string>_IdentityRole_RoleId", table: "AspNetUserRoles");
             migrationBuilder.DropForeignKey(name: "FK_IdentityUserRole<string>_ApplicationUser_UserId", table: "AspNetUserRoles");
             migrationBuilder.DropForeignKey(name: "FK_Article_Contributor_ContributorId", table: "Articles");
-            migrationBuilder.DropColumn(name: "Role", table: "Contributors");
             migrationBuilder.AddForeignKey(
                 name: "FK_IdentityRoleClaim<string>_IdentityRole_RoleId",
                 table: "AspNetRoleClaims",

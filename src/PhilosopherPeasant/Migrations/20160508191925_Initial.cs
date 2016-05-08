@@ -5,7 +5,7 @@ using Microsoft.Data.Entity.Metadata;
 
 namespace PhilosopherPeasant.Migrations
 {
-    public partial class A : Migration
+    public partial class Initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -31,6 +31,7 @@ namespace PhilosopherPeasant.Migrations
                     ConcurrencyStamp = table.Column<string>(nullable: true),
                     Email = table.Column<string>(nullable: true),
                     EmailConfirmed = table.Column<bool>(nullable: false),
+                    IsContributor = table.Column<bool>(nullable: false),
                     LockoutEnabled = table.Column<bool>(nullable: false),
                     LockoutEnd = table.Column<DateTimeOffset>(nullable: true),
                     NormalizedEmail = table.Column<string>(nullable: true),
@@ -139,7 +140,10 @@ namespace PhilosopherPeasant.Migrations
                     Bio = table.Column<string>(nullable: true),
                     ImageLink = table.Column<string>(nullable: true),
                     Name = table.Column<string>(nullable: true),
-                    PublicEmail = table.Column<string>(nullable: true)
+                    PublicEmail = table.Column<string>(nullable: true),
+                    Role = table.Column<string>(nullable: true),
+                    StartDate = table.Column<DateTime>(nullable: false),
+                    UserName = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {

@@ -53,23 +53,23 @@ namespace PhilosopherPeasant.Controllers
                     roleList.Remove(role);
                 }
             }
-            ViewBag.Users = userList;
-            ViewBag.Roles = roleList;
+            ViewData["Users"] = userList;
+            ViewData["Roles"] = roleList;
             return View();
         }
+
         [Authorize(Roles = "Editor in chief")]
         [HttpPost]
-        public async Task<IActionResult> CreateContributor (Contributor contributor, string user, string role)
+        public async Task<IActionResult> CreateContributor (Contributor contributor)
         {
-            ApplicationUser thisUser = _userManager.Users.FirstOrDefault(m => m.UserName == user);
-            await _userManager.AddToRoleAsync(thisUser, role);
+            ApplicationUser thisUser = _userManager.Users.FirstOrDefault(m => m.UserName == contributor.UserName);
+            await _userManager.AddToRoleAsync(thisUser, contributor.Role);
             if(contributor.ImageLink == null)
             {
                 contributor.ImageLink = "https://encrypted-tbn1.gstatic.com/images?q=tbn:ANd9GcRjMO_geFIxZwVKfRT44hW-Jw3FT0Oe8BW1x2e24ePYwu8XbgIE1g";
             }
             contributor.ApplicationUser = thisUser;
             contributor.StartDate = thisUser.StartDate;
-            contributor.Role = role;
             thisUser.IsContributor = true;
             _db.Contributors.Add(contributor);
             _db.SaveChanges();
@@ -100,25 +100,33 @@ namespace PhilosopherPeasant.Controllers
                     roleList.Remove(role);
                 }
             }
-            ViewBag.Users = userList;
-            ViewBag.Roles = roleList;
+            ViewData["Users"] = userList;
+            ViewData["Roles"] = roleList;
             return View(contributor);
         }
 
         [Authorize(Roles = "Editor in chief")]
         [HttpPost]
-        public async Task<IActionResult> EditContributor(Contributor contributor, string user, string role)
+        public async Task<IActionResult> EditContributor(Contributor contributor)
         {
-            //First Clear Roles from old user
+            //First Clear Roles and IsContributor from old user
+            //this will need to be fixed, if you accidentally assign the wrong
+            //user to a contributor, and then unassign them, that user will have
+            //all its roles erased, including those it already had,
+            //need to find a way to remove roles only if the user is assigned to no other
+            //contributor
+             
             ApplicationUser oldUser = await _userManager.FindByIdAsync(contributor.ApplicationUserId);
             var oldUserRoles = _userManager.GetRolesAsync(oldUser).Result;
             await _userManager.RemoveFromRolesAsync(oldUser, oldUserRoles);
+            oldUser.IsContributor = false;
+            
             //Reset Roles for new user
-            ApplicationUser newUser = _userManager.Users.FirstOrDefault(m => m.UserName == user);
+            ApplicationUser newUser = _userManager.Users.FirstOrDefault(m => m.UserName == contributor.UserName);
             var newUserOldRoles = _userManager.GetRolesAsync(newUser).Result;
             //Attach new user and new user roles to contributor object
             contributor.ApplicationUser = newUser;
-            await _userManager.AddToRoleAsync(newUser, role);
+            await _userManager.AddToRoleAsync(newUser, contributor.Role);
             _db.Entry(contributor).State = EntityState.Modified;
             _db.SaveChanges();
             return RedirectToAction("Index");
@@ -136,7 +144,7 @@ namespace PhilosopherPeasant.Controllers
         [HttpPost]
         public IActionResult EditProfile(Contributor contributor)
         {
-            _db.Entry(contributor).State = Microsoft.Data.Entity.EntityState.Modified;
+            _db.Entry(contributor).State = EntityState.Modified;
             _db.SaveChanges();
             return RedirectToAction("Index");
         }
@@ -156,7 +164,7 @@ namespace PhilosopherPeasant.Controllers
             var thisApplicationUserRoles = _userManager.GetRolesAsync(thisApplicationUser).Result;
 
             await _userManager.RemoveFromRolesAsync(thisApplicationUser, thisApplicationUserRoles);
-
+            thisApplicationUser.IsContributor = false;
             _db.Contributors.Remove(thisContributor);
             _db.SaveChanges();
             return RedirectToAction("Index");

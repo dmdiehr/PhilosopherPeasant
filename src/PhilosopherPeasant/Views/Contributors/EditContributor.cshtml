@@ -19,9 +19,10 @@
 
     <p>@Html.EditorFor(model => model.ImageLink)</p>
 
-    <p>User : @Html.DropDownList("user", new SelectList(ViewBag.Users))</p>
-    <p>Role: @Html.DropDownList("role", new SelectList(ViewBag.Roles))</p>
-
+    <p>@Html.DropDownListFor(model => model.UserName, new SelectList((System.Collections.IEnumerable) ViewData["Users"], "UserName", "UserName"))</p>
+    
+    <p>@Html.DropDownListFor(model => model.Role, new SelectList((System.Collections.IEnumerable)ViewData["Roles"], "Name", "Name"))</p>
+    
     <input type="submit" value="Edit Contributor" />
 }
 

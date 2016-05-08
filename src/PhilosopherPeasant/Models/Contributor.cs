@@ -28,6 +28,7 @@ namespace PhilosopherPeasant.Models
         [ForeignKey("ApplicationUser")]
         public string ApplicationUserId { get; set; }
         public virtual ApplicationUser ApplicationUser {get; set;}
+        public virtual string UserName { get; set; }
         public virtual string Role { get; set; }
         public virtual DateTime StartDate { get; set; }
 

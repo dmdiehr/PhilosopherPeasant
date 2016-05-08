@@ -8,8 +8,8 @@ using PhilosopherPeasant.Models;
 namespace PhilosopherPeasant.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20160507221931_D")]
-    partial class D
+    [Migration("20160508191925_Initial")]
+    partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -211,6 +211,8 @@ namespace PhilosopherPeasant.Migrations
                     b.Property<string>("Role");
 
                     b.Property<DateTime>("StartDate");
+
+                    b.Property<string>("UserName");
 
                     b.HasKey("ContributorId");
 
