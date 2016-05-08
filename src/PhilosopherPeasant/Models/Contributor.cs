@@ -24,6 +24,9 @@ namespace PhilosopherPeasant.Models
         public string PublicEmail { get; set; }
 
         public virtual ICollection<Article> Articles { get; set; }
+
+        [ForeignKey("ApplicationUser")]
+        public string ApplicationUserId { get; set; }
         public virtual ApplicationUser ApplicationUser {get; set;}
         public virtual string Role { get; set; }
         public virtual DateTime StartDate { get; set; }
@@ -31,7 +34,6 @@ namespace PhilosopherPeasant.Models
         public Contributor()
         {
             Articles = new HashSet<Article>();
-            ImageLink = "https://encrypted-tbn1.gstatic.com/images?q=tbn:ANd9GcRjMO_geFIxZwVKfRT44hW-Jw3FT0Oe8BW1x2e24ePYwu8XbgIE1g";
         }
     }
 }

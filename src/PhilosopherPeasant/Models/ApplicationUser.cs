@@ -10,12 +10,14 @@ namespace PhilosopherPeasant.Models
     public class ApplicationUser : IdentityUser
     {
         public DateTime StartDate { get; set; }
+        public bool IsContributor { get; set; }
         public virtual ICollection<Comment> Comments { get; set; }
 
         public ApplicationUser()
         {
             Comments = new HashSet<Comment>();
             StartDate = DateTime.Today;
+            IsContributor = false;
         }
     }
 }

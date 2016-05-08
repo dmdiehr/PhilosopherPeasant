@@ -10,14 +10,14 @@
 {
     <p>@Html.EditorFor(model => model.Name, new { htmlAttributes = new { placeholder = "Name" } })</p>
 
-    <p>@Html.EditorFor(model => model.PublicEmail, new { htmlAttributes = new { placeholder = "Email" } })</p>
+    <p>@Html.EditorFor(model => model.PublicEmail, new { htmlAttributes = new { placeholder = "Public Email" } })</p>
 
     <p>@Html.EditorFor(model => model.Bio, new { htmlAttributes = new { placeholder = "Bio" } })</p>
 
     <p>@Html.EditorFor(model => model.ImageLink, new { htmlAttributes = new { placeholder = "Image Link" } })</p>
 
-    <p>Assign to username : @Html.DropDownList("user", new SelectList(ViewBag.Users))</p>
-    <p>Assign to role: @Html.DropDownList("role", new SelectList(ViewBag.Roles))</p>
+    <p>User : @Html.DropDownList("user", new SelectList(ViewBag.Users))</p>
+    <p>Role: @Html.DropDownList("role", new SelectList(ViewBag.Roles))</p>
 
     <input type="submit" value="Add Contributor" />
 }

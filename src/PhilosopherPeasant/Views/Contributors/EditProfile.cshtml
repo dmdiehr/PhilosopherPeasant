@@ -4,12 +4,11 @@
     ViewData["Title"] = "Contributor Create";
 }
 
-<h2>Edit Contributor</h2>
+<h2>Edit Profile</h2>
 
 @using (Html.BeginForm())
 {
     @Html.HiddenFor(model => model.ContributorId)
-    @Html.HiddenFor(model => model.ApplicationUserId)
 
     <p>@Html.EditorFor(model => model.Name)</p>
 
@@ -19,10 +18,7 @@
 
     <p>@Html.EditorFor(model => model.ImageLink)</p>
 
-    <p>User : @Html.DropDownList("user", new SelectList(ViewBag.Users))</p>
-    <p>Role: @Html.DropDownList("role", new SelectList(ViewBag.Roles))</p>
 
-    <input type="submit" value="Edit Contributor" />
+    <input type="submit" value="Edit Profile" />
 }
 
-@Html.ActionLink("Back to List", "Index")
