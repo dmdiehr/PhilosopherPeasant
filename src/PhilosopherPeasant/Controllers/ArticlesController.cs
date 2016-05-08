@@ -6,18 +6,23 @@ using Microsoft.AspNet.Mvc;
 using Microsoft.Data.Entity;
 using Microsoft.AspNet.Mvc.Rendering;
 using PhilosopherPeasant.Models;
-
-
+using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Authorization;
+using System.Diagnostics;
 
 namespace PhilosopherPeasant.Controllers
 {
+    [Authorize(Roles = "Editor in chief,Editor,Writer")]
     public class ArticlesController : Controller
     {
         private ApplicationDbContext _db;
-        public ArticlesController(ApplicationDbContext context)
+        private readonly UserManager<ApplicationUser> _userManager;
+        public ArticlesController(ApplicationDbContext context, UserManager<ApplicationUser> userManager)
         {
             _db = context;
+            _userManager = userManager;
         }
+        [AllowAnonymous]
         public IActionResult Index(int id)
         {
           var articles = _db.Articles.Where(x => x.ContributorId == id).Include(x => x.Contributor).ToList();
@@ -37,8 +42,15 @@ namespace PhilosopherPeasant.Controllers
         }
 
         [HttpPost]
-        public IActionResult CreateArticle(Article article)
+        public async Task<IActionResult> CreateArticle(Article article)
         {
+            ApplicationUser currentUser = await _userManager.FindByNameAsync(User.Identity.Name);
+            Contributor thisContributor = _db.Contributors.Where(c => c.ApplicationUserId == currentUser.Id).FirstOrDefault();
+            article.Contributor = thisContributor;
+            article.SubmitDate = DateTime.Today;
+            article.Reviewed = false;
+            article.Approved = false;
+
             _db.Articles.Add(article);
             _db.SaveChanges();
             return RedirectToAction("Portal", "Home");

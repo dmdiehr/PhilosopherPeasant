@@ -24,9 +24,9 @@
     @if (User.IsInRole("Editor in chief") || User.IsInRole("Editor") || User.IsInRole("Writer"))
     {
         <div>
-            <a asp-controller="Contributors" asp-action="EditProfile"}>Edit My Profile</a>
+            <a asp-controller="Contributors" asp-action="EditProfile">Edit My Profile</a>
             <p>Manage My Articles</p>
-            <p>Submit Article</p>
+            <a asp-controller="Articles" asp-action="CreateArticle">Submit Article</a>
         </div>
     }
 </div>
