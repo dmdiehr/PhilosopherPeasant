@@ -22,21 +22,23 @@ namespace PhilosopherPeasant.Models
         [DataType(DataType.MultilineText)]
         public string Body { get; set; }
 
+        public DateTime SubmitDate { get; set; }
         public DateTime PublishDate { get; set; }
 
         [ForeignKey("Contributor")]
         public int ContributorId { get; set; }
-        [NotMapped]
-        public Contributor Contributor { get; set; }
+        public virtual Contributor Contributor { get; set; }
         
         public bool Reviewed { get; set; }
         public bool Approved { get; set; }
 
+        public virtual ICollection<Tangent> Tangents { get; set; }
         public virtual ICollection<Comment> Comments { get; set; }
         
         public Article()
         {
             Comments = new HashSet<Comment>();
+            Tangents = new HashSet<Tangent>();
         }
 
     }
