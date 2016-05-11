@@ -2,6 +2,35 @@
     ViewData["Title"] = "Staff Portal";
 }
 
+<script type="text/javascript">
+    $(document).ready(function () {
+
+
+
+        //Edit Profile
+        $('.edit-profile-button').click(function () {
+            $.ajax({
+                type: 'GET',
+                url: '@Url.Action("EditProfile", "Contributors")',
+                success: function (result) {
+                    $('.edit-profile-output').html(result);
+                }
+            });
+        }); //edit profile end
+        //Submit Article
+        $('.submit-article-button').click(function () {
+            $.ajax({
+                type: 'GET',
+                url: '@Url.Action("CreateArticle", "Articles")',
+                success: function (result) {
+                    $('.submit-article-output').html(result);
+                }
+            });
+        }); //edit profile end
+
+    }); //document.ready end
+</script>
+
 <div class="body-content">
     @if (User.IsInRole("Admin"))
     {
@@ -24,9 +53,15 @@
     @if (User.IsInRole("Editor in chief") || User.IsInRole("Editor") || User.IsInRole("Writer"))
     {
         <div>
-            <a asp-controller="Contributors" asp-action="EditProfile">Edit My Profile</a>
+            @*<a asp-controller="Contributors" asp-action="EditProfile">Edit My Profile</a>*@
+            <div class="edit-profile-button">Edit My Profile</div>
+            <div class="edit-profile-output"></div>
+            
             <p>Manage My Articles</p>
-            <a asp-controller="Articles" asp-action="CreateArticle">Submit Article</a>
+
+            @*<a asp-controller="Articles" asp-action="CreateArticle">Submit Article</a>*@
+            <div class="submit-article-button">Submit Article</div>
+            <div class="submit-article-output"></div>
         </div>
     }
 </div>

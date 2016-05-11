@@ -136,6 +136,7 @@ namespace PhilosopherPeasant.Controllers
         [Authorize(Roles = "Editor in chief,Editor,Writer")]
         public async Task<IActionResult> EditProfile()
         {
+            Debug.WriteLine("Yo!");
             ApplicationUser currentUser = await _userManager.FindByNameAsync(User.Identity.Name);
             Contributor thisContributor = _db.Contributors.Where(c => c.ApplicationUserId == currentUser.Id).FirstOrDefault();
             return View(thisContributor);

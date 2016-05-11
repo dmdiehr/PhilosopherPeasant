@@ -77,5 +77,37 @@ namespace PhilosopherPeasant.Controllers
             _db.SaveChanges();
             return RedirectToAction("Portal", "Home");
         }
+
+
+        ////////////////////////////////////
+        //public IActionResult WikiLookup()
+        //{
+        //    var entry = Request.Form["Body"];
+
+        //    var client = new RestClient("https://en.wikipedia.org/w/api.php");
+
+        //    var request = new RestRequest("https://en.wikipedia.org/w/api.php", Method.GET);
+
+        //    request.AddParameter("action", "query");
+        //    request.AddParameter("titles", entry);
+        //    request.AddParameter("prop", "extracts");
+        //    request.AddParameter("format", "json");
+        //    request.AddParameter("exchars", 200);
+
+        //    var response = client.Execute(request);
+
+        //    JObject jsonResponse = (JObject)JsonConvert.DeserializeObject(response.Content);
+
+        //    Console.WriteLine(jsonResponse["extract"]);
+        //    //var newResponse = jsonResponse["extract"];
+
+        //    //ViewBag.Response = newResponse;
+
+
+        //    //var result = newWiki.WikiCall(entry);
+
+        //    ViewBag.result = response.Content.ToString();
+        //    return View("WikiResult");
+        //}
     }
 }
