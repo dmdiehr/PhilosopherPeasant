@@ -9,6 +9,7 @@
     <h3>@article.Title</h3>
     <p>@article.Abstract</p>
     <p>@article.PublishDate</p>
+    <p><a asp-action="DisplayArticle" asp-controller="Articles" asp-route-id="@article.ArticleId">Full Article</a></p>
 }
 
 @if(Model.Count()<1)

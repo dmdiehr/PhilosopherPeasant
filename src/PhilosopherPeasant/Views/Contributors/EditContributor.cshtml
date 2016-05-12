@@ -23,7 +23,8 @@
     
     <p>@Html.DropDownListFor(model => model.Role, new SelectList((System.Collections.IEnumerable)ViewData["Roles"], "Name", "Name"))</p>
     
-    <input type="submit" value="Edit Contributor" />
+    <input type="submit" value="Submit Edit" />
 }
 
-@Html.ActionLink("Back to List", "Index")
+@Html.ActionLink("Back to Contributor List", "Index")
+

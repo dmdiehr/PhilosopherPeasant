@@ -1,23 +1,23 @@
 ﻿﻿@{
     ViewData["Title"] = "";
 }
-
 @model PhilosopherPeasant.Models.Article
 <h2>Create Article</h2>
 
 
 @using (Html.BeginForm())
 {
-    @Html.LabelFor(model => model.Title)
-    @Html.EditorFor(model => model.Title)
-
-    @Html.LabelFor(model => model.Abstract)
-    @Html.EditorFor(model => model.Abstract)
-
-    @Html.LabelFor(model => model.Body)
-    @Html.EditorFor(model => model.Body)
+    <p>
+        @Html.EditorFor(model => model.Title, new { htmlAttributes = new { placeholder = "Title" } })
+    </p>
+    <p>
+        @Html.EditorFor(model => model.Abstract, new { htmlAttributes = new { placeholder = "Abstract" } })
+    </p>
+    <p>
+        @Html.EditorFor(model => model.Body, new { htmlAttributes = new { placeholder = "Body" } })
+    </p>
 
     <input type="submit" value="Submit Article" />
 }
 
-@Html.ActionLink("Back to List", "Index")
+@Html.ActionLink("Back", "Portal", "Home")

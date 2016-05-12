@@ -23,18 +23,9 @@ namespace PhilosopherPeasant.Controllers
             _userManager = userManager;
         }
         [AllowAnonymous]
-        public IActionResult Index(int id)
+        public IActionResult Index()
         {
-          var articles = _db.Articles.Where(x => x.ContributorId == id).Include(x => x.Contributor).ToList();
-
-          if(articles.Count >= 1)
-          {
-              return View(articles);
-          }
-          else
-          {
-              return View();
-          }
+            return View();
         }
         public IActionResult CreateArticle()
         {
@@ -76,6 +67,14 @@ namespace PhilosopherPeasant.Controllers
             _db.Articles.Remove(thisArticle);
             _db.SaveChanges();
             return RedirectToAction("Portal", "Home");
+        }
+        public IActionResult DisplayArticle(int id)
+        {
+            var thisArticle = _db.Articles
+                .Where(a => a.ArticleId == id)
+                .Include(a => a.Contributor)
+                .FirstOrDefault();
+            return View(thisArticle);
         }
 
 

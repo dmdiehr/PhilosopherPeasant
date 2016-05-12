@@ -43,6 +43,10 @@ namespace PhilosopherPeasant.Controllers
                     userList.Remove(user);
                 }
             }
+            if(userList.Count() == 0)
+            {
+                return View("NoAvailableUsers");
+            }
 
             List<IdentityRole> roleList = _db.Roles.ToList();
             List<IdentityRole> roleListClone = roleList.ToList();

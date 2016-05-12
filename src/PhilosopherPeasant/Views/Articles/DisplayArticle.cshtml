@@ -1,0 +1,13 @@
+@model PhilosopherPeasant.Models.Article
+
+@{
+    ViewData["Title"] = "Philosopher Peasant";
+}
+
+
+<div>
+    <h2>@Model.Title</h2>
+    <p>@Model.PublishDate</p>
+    <p>@Model.Body</p>
+    <p>@Model.Contributor.Name</p>
+</div>
