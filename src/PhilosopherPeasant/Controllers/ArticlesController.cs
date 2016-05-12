@@ -9,6 +9,7 @@ using PhilosopherPeasant.Models;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Authorization;
 using System.Diagnostics;
+using System.Text.RegularExpressions;
 
 namespace PhilosopherPeasant.Controllers
 {
@@ -74,6 +75,17 @@ namespace PhilosopherPeasant.Controllers
             var thisArticle = _db.Articles
                 .Where(a => a.ArticleId == id)
                 .Include(a => a.Contributor).FirstOrDefault();
+            string pattern = "\\{\\w+\\}\\(\\w+\\)";
+            Regex rgx = new Regex(pattern);
+            foreach(Match match in rgx.Matches(thisArticle.Body))
+            {
+                string replacement = match.ToString().ToUpper();
+                //match.Value = replacement;
+            }
+
+
+            //string replacement = "FOOBAR TEST";
+            //thisArticle.Body = rgx.Replace(thisArticle.Body, replacement);
 
             thisArticle.Body = thisArticle.Body.Replace("\n", "</p><p>");
             thisArticle.Body = thisArticle.Body.Replace("<p>\r</p>", "");
