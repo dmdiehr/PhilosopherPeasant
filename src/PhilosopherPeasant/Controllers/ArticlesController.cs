@@ -68,12 +68,17 @@ namespace PhilosopherPeasant.Controllers
             _db.SaveChanges();
             return RedirectToAction("Portal", "Home");
         }
+        [AllowAnonymous]
         public IActionResult DisplayArticle(int id)
         {
             var thisArticle = _db.Articles
                 .Where(a => a.ArticleId == id)
-                .Include(a => a.Contributor)
-                .FirstOrDefault();
+                .Include(a => a.Contributor).FirstOrDefault();
+
+            thisArticle.Body = thisArticle.Body.Replace("\n", "</p><p>");
+            thisArticle.Body = thisArticle.Body.Replace("<p>\r</p>", "");
+
+
             return View(thisArticle);
         }
 
