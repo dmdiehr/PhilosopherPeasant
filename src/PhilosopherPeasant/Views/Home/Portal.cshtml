@@ -5,8 +5,16 @@
 <script type="text/javascript">
     $(document).ready(function () {
 
-
-
+        //Create Contributor
+        $('.create-contributor-button').click(function () {
+            $.ajax({
+                type: 'GET',
+                url: '@Url.Action("CreateContributor", "Contributors")',
+                success: function (result) {
+                    $('.create-contributor-output').html(result);
+                }
+            });
+        });//create contributor end
         //Edit Profile
         $('.edit-profile-button').click(function () {
             $.ajax({
@@ -42,6 +50,9 @@
     {
         <div>
             <a asp-controller="Contributors" asp-action="Index">Manage Contributors</a>
+            @*<a asp-controller="Contributors" asp-action="CreateContributor">Add New Contributor</a>*@
+            <div class="create-contributor-button">Add Contributor</div>
+            <div class="create-contributor-output"></div>
         </div>
     }
     @if (User.IsInRole("Editor in chief") || User.IsInRole("Editor"))

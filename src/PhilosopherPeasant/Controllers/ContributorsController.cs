@@ -73,7 +73,7 @@ namespace PhilosopherPeasant.Controllers
             thisUser.IsContributor = true;
             _db.Contributors.Add(contributor);
             _db.SaveChanges();
-            return RedirectToAction("Index");
+            return RedirectToAction("Portal", "Home");
         }
 
         //EDIT
@@ -126,6 +126,7 @@ namespace PhilosopherPeasant.Controllers
             var newUserOldRoles = _userManager.GetRolesAsync(newUser).Result;
             //Attach new user and new user roles to contributor object
             contributor.ApplicationUser = newUser;
+            newUser.IsContributor = true;
             await _userManager.AddToRoleAsync(newUser, contributor.Role);
             _db.Entry(contributor).State = EntityState.Modified;
             _db.SaveChanges();
@@ -136,7 +137,6 @@ namespace PhilosopherPeasant.Controllers
         [Authorize(Roles = "Editor in chief,Editor,Writer")]
         public async Task<IActionResult> EditProfile()
         {
-            Debug.WriteLine("Yo!");
             ApplicationUser currentUser = await _userManager.FindByNameAsync(User.Identity.Name);
             Contributor thisContributor = _db.Contributors.Where(c => c.ApplicationUserId == currentUser.Id).FirstOrDefault();
             return View(thisContributor);
@@ -147,7 +147,7 @@ namespace PhilosopherPeasant.Controllers
         {
             _db.Entry(contributor).State = EntityState.Modified;
             _db.SaveChanges();
-            return RedirectToAction("Index");
+            return RedirectToAction("Portal", "Home");
         }
 
         //DELETE
