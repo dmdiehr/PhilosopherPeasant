@@ -7,14 +7,16 @@
 <script type="text/javascript">
     $(document).ready(function () {
         //Wiki Insert
-        console.log("before click");
-        $('.clickable').click(function () {
-            console.log("after click");
+        $('.clickable').on("click", function () {
+            var thisId = $(this).attr("id");
+            var thisEntry = thisId.split("-")[0];
+            var outputDiv = thisId.replace("button", "output");
             $.ajax({
                 type: 'GET',
-                url: '@Url.Action("Wiki", "Articles", new { entry = "Socrates" })',
+                data: {entry: thisEntry},
+                url: '@Url.Action("Wiki", "Articles")',
                 success: function (result) {
-                    $('.output').html(result);
+                    $('#'+outputDiv).html(result);
                 }
             });//end ajax
         });// end Wiki Insert
