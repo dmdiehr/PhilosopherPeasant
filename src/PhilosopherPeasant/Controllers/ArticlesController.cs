@@ -10,6 +10,9 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Authorization;
 using System.Diagnostics;
 using System.Text.RegularExpressions;
+using RestSharp;
+using Newtonsoft.Json.Linq;
+using Newtonsoft.Json;
 
 namespace PhilosopherPeasant.Controllers
 {
@@ -72,21 +75,35 @@ namespace PhilosopherPeasant.Controllers
         [AllowAnonymous]
         public IActionResult DisplayArticle(int id)
         {
-            var thisArticle = _db.Articles
+            Article thisArticle = _db.Articles
                 .Where(a => a.ArticleId == id)
                 .Include(a => a.Contributor).FirstOrDefault();
             string pattern = "\\{\\w+\\}\\(\\w+\\)";
             Regex rgx = new Regex(pattern);
-            foreach(Match match in rgx.Matches(thisArticle.Body))
+
+            while(true)
             {
-                string replacement = match.ToString().ToUpper();
-                //match.Value = replacement;
+                Match match = rgx.Match(thisArticle.Body);
+                if(!match.Success)
+                {
+                    break;
+                }
+                string matchString = match.Value;
+                int matchIndex = match.Index;
+
+                int firstTermLength = matchString.IndexOf('}');
+                int secondTermLength = matchString.IndexOf(')') - firstTermLength;
+
+                string firstTerm = matchString.Substring(1, firstTermLength - 1);
+                string secondTerm = matchString.Substring(firstTermLength + 2, secondTermLength - 2);
+
+                string secondTermSafe = secondTerm.Replace(" ", "_");
+
+                string replacementHtml = "<span class='clickable' id='" + secondTermSafe + "-button" + matchIndex + "'>" + firstTerm + "</span><div class='output' id='" + secondTermSafe + "-output" + matchIndex + "'></div>";
+
+                thisArticle.Body = thisArticle.Body.Remove(matchIndex, matchString.Length);
+                thisArticle.Body = thisArticle.Body.Insert(matchIndex, replacementHtml);
             }
-
-
-            //string replacement = "FOOBAR TEST";
-            //thisArticle.Body = rgx.Replace(thisArticle.Body, replacement);
-
             thisArticle.Body = thisArticle.Body.Replace("\n", "</p><p>");
             thisArticle.Body = thisArticle.Body.Replace("<p>\r</p>", "");
 
@@ -94,36 +111,48 @@ namespace PhilosopherPeasant.Controllers
             return View(thisArticle);
         }
 
+        [AllowAnonymous]
+        public IActionResult Wiki(string entry)
+        {
 
-        ////////////////////////////////////
-        //public IActionResult WikiLookup()
-        //{
-        //    var entry = Request.Form["Body"];
+            var client = new RestClient("https://en.wikipedia.org/w/api.php");
+            var request = new RestRequest("https://en.wikipedia.org/w/api.php", Method.GET);
 
-        //    var client = new RestClient("https://en.wikipedia.org/w/api.php");
+            request.AddParameter("action", "query");
+            request.AddParameter("titles", entry);
+            request.AddParameter("prop", "extracts");
+            request.AddParameter("format", "json");
+            request.AddParameter("exintro", 1);
 
-        //    var request = new RestRequest("https://en.wikipedia.org/w/api.php", Method.GET);
+            var response = client.Execute(request);
 
-        //    request.AddParameter("action", "query");
-        //    request.AddParameter("titles", entry);
-        //    request.AddParameter("prop", "extracts");
-        //    request.AddParameter("format", "json");
-        //    request.AddParameter("exchars", 200);
+            JObject jsonResponse = (JObject)JsonConvert.DeserializeObject(response.Content);
 
-        //    var response = client.Execute(request);
+            string extract = null;
+            var jTokenList = jsonResponse.Descendants();
+            foreach (var token in jTokenList)
+            {
+                try
+                {
+                    extract = token.Value<string>("extract");
+                    if (extract != null)
+                    {
+                        break;
+                    }
+                }
+                catch { }
 
-        //    JObject jsonResponse = (JObject)JsonConvert.DeserializeObject(response.Content);
-
-        //    Console.WriteLine(jsonResponse["extract"]);
-        //    //var newResponse = jsonResponse["extract"];
-
-        //    //ViewBag.Response = newResponse;
-
-
-        //    //var result = newWiki.WikiCall(entry);
-
-        //    ViewBag.result = response.Content.ToString();
-        //    return View("WikiResult");
-        //}
+            }
+            Wiki newWiki = jsonResponse.ToObject<Wiki>();
+            if (extract == null)
+            {
+                ViewBag.result = "Oops, we seem to have misplaced our notes. Read on, this was just filler anyway.";
+            }
+            else
+            {
+                ViewBag.result = extract;
+            }
+            return View();
+        }
     }
 }

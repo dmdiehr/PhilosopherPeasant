@@ -4,6 +4,23 @@
     ViewData["Title"] = "Philosopher Peasant";
 }
 
+<script type="text/javascript">
+    $(document).ready(function () {
+        //Wiki Insert
+        console.log("before click");
+        $('.clickable').click(function () {
+            console.log("after click");
+            $.ajax({
+                type: 'GET',
+                url: '@Url.Action("Wiki", "Articles", new { entry = "Socrates" })',
+                success: function (result) {
+                    $('.output').html(result);
+                }
+            });//end ajax
+        });// end Wiki Insert
+    }); //end document ready
+</script>
+
 
 <div>
     <h2>@Model.Title</h2>

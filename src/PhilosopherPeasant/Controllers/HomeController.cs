@@ -16,7 +16,7 @@ namespace PhilosopherPeasant.Controllers
             _db = context;
         }
         public IActionResult Index()
-        {   
+        {
             return View(_db.Articles.ToList());
         }
 
