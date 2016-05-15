@@ -1,23 +1,62 @@
 ﻿body {
     padding-top: 50px;
     padding-bottom: 20px;
+    background-color: cornflowerblue;
 }
 
-/* Wrapping element */
-/* Set some basic padding to keep content from hitting the edges */
 .body-content {
-    padding: 15px;
+    background-color: cornflowerblue;
+    color: white;
 }
 
-/* Set widths on the form inputs since otherwise they're 100% wide */
 input,
 select,
 textarea {
     max-width: 280px;
 }
+
 .clickable {
-    color: red;
+    color: #999;
+    cursor: pointer;
 }
+
 .output {
-    background-color: yellow;
+    padding: 5%;
+    margin: auto;
+    background-color: white;
+    width: 75%;
+    border: 1px solid #96b7f2;
+    border-radius: 2%; 
 }
+
+.main-content {
+    width: 100%;
+    max-width: 766px;
+    background-color: aliceblue;
+    margin: auto;
+    padding: 20px;
+    min-height: 100vh;
+    color: black;
+}
+
+.article-tile {
+    padding: 0 8% 8% 8%;
+}
+
+.byline-image {
+    display: inline;
+    width: 40px;
+    border-radius: 50%;
+    border: 1px solid #ccc;
+}
+
+.byline {
+    padding: 10px 0;
+}
+
+.navbar-custom {
+    background-color: darkblue;
+    color: cornflowerblue;
+}
+
+

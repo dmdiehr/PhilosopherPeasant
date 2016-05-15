@@ -3,19 +3,36 @@
 }
 
 @model IEnumerable<PhilosopherPeasant.Models.Article>
-    
-@foreach(var article in Model)
-{
-    <h3>@article.Title</h3>
-    <p>@article.Abstract</p>
-    <p>@article.PublishDate</p>
-    <p><a asp-action="DisplayArticle" asp-controller="Articles" asp-route-id="@article.ArticleId">Full Article</a></p>
-}
+ <div class="main-content">
+     @foreach (var article in Model)
+     {
+         <div class="article-tile">
+             <h2>@article.Title</h2>
+             @try
+             {
+                 @if (article.Contributor.Name != null && article.Contributor.Name.Length > 0)
+                 {
+                     <div class="byline">
+                         <img class="byline-image" src="@article.Contributor.ImageLink" />
+                         <span class="byline-span">&nbsp;-&nbsp;&nbsp;@article.Contributor.Name</span>
+                     </div>
+                 }
+             }
+             catch { }
+             <p>@article.PublishDate.ToString("MMMM d, yyyy")</p>
+             <p>@article.Abstract</p>
 
-@if(Model.Count()<1)
-{
-    <h2>Oops!</h2>
-    <p>This is embarrassing. We have somehow misplaced all our brilliant articles.</p>
-}
+             <p><a asp-action="DisplayArticle" asp-controller="Articles" asp-route-id="@article.ArticleId">Full Article</a></p>
+             <hr />
+         </div>
+     }
+
+     @if (Model.Count() < 1)
+     {
+         <h2>Oops!</h2>
+         <p>This is embarrassing. We have somehow misplaced all our brilliant articles.</p>
+     }
+ </div>   
+
      
 

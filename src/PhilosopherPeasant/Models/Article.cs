@@ -22,7 +22,7 @@ namespace PhilosopherPeasant.Models
         [DataType(DataType.MultilineText)]
         public string Body { get; set; }
 
-        public DateTime SubmitDate { get; set; }
+        public DateTime SubmitDate { get; set; }     
         public DateTime PublishDate { get; set; }
 
         [ForeignKey("Contributor")]

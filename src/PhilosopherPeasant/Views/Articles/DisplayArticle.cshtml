@@ -24,9 +24,18 @@
 </script>
 
 
-<div>
-    <h2>@Model.Title</h2>
-    <p>@Model.PublishDate</p>
-    <p>@Html.Raw(Model.Body)</p>
-    <p>@Model.Contributor.Name</p>
+<div class="main-content">
+    <div class="display-article">
+        <div class="article-header">
+            <h2>@Model.Title</h2>
+            <p>@Model.PublishDate</p>
+            <p>@Model.Contributor.Name</p>
+        </div>
+            <p>@Html.Raw(Model.Body)</p>
+        <div class="article-footer">
+            <img class="article-footer-image" src="@Model.Contributor.ImageLink" />
+            <p class="article-footer-bio">@Model.Contributor.Bio</p>
+            <a href="mailto:@Model.Contributor.PublicEmail">@Model.Contributor.PublicEmail</a>
+        </div>
+    </div>
 </div>

@@ -17,6 +17,7 @@ namespace PhilosopherPeasant.Controllers
         }
         public IActionResult Index()
         {
+            ICollection<Article> articleList = _db.Articles.Include(a => a.Contributor).ToList();
             return View(_db.Articles.ToList());
         }
 

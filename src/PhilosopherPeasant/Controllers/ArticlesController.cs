@@ -99,7 +99,7 @@ namespace PhilosopherPeasant.Controllers
 
                 string secondTermSafe = secondTerm.Replace(" ", "_");
 
-                string replacementHtml = "<span class='clickable' id='" + secondTermSafe + "-button" + matchIndex + "'>" + firstTerm + "</span><div class='output' id='" + secondTermSafe + "-output" + matchIndex + "'></div>";
+                string replacementHtml = "<span class='clickable' id='" + secondTermSafe + "-button" + matchIndex + "'>" + firstTerm + "</span><div id='" + secondTermSafe + "-output" + matchIndex + "'></div>";
 
                 thisArticle.Body = thisArticle.Body.Remove(matchIndex, matchString.Length);
                 thisArticle.Body = thisArticle.Body.Insert(matchIndex, replacementHtml);
@@ -143,7 +143,6 @@ namespace PhilosopherPeasant.Controllers
                 catch { }
 
             }
-            Wiki newWiki = jsonResponse.ToObject<Wiki>();
             if (extract == null)
             {
                 ViewBag.result = "Oops, we seem to have misplaced our notes. Read on, this was just filler anyway.";

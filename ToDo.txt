@@ -1,0 +1,32 @@
+Don't Know How:
+
+	-Custom AccessDenied Page for 
+	-Automatically Seed data with migrations to automatically create user with 'Admin' role if absent.
+
+Priorities:
+
+	-Style...everything :
+		-Front Page
+		-Contributors Page
+		-Staff Portal Page
+		-Wiki Inserts
+		-Forms
+		-Ajax clickables
+
+	-Article self editing
+	-Article editing
+	-Article approval process
+
+WishList:
+
+	-Hide button on wiki popups
+	-Comments
+	-Upload articles and pics from files.
+	-Database auditing for admin
+	-Email confirmation service
+	-Comment moderation and user banning
+	-Pagination/Endless Scrolling
+
+
+
+
