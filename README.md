@@ -22,14 +22,14 @@ user comments and comment moderation.
 
 ## Technologies Used
 
-_.NET Core
-_MVC 6
-_Entity Framework 7 with Identity
-_gulp
-_JavaScript
-_jQuery
-_Bootstrap
-_MS SQL
+_.NET Core_
+_MVC 6_
+_Entity Framework 7 with Identity_
+_gulp_
+_JavaScript_
+_jQuery_
+_Bootstrap_
+_MS SQL_
 
 
 ### Legal
