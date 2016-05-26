@@ -48,8 +48,7 @@
     @if (User.IsInRole("Editor in chief"))
     {
         <div>
-            <a asp-controller="Contributors" asp-action="Index">Manage Contributors</a>
-            @*<a asp-controller="Contributors" asp-action="CreateContributor">Add New Contributor</a>*@
+            <a asp-controller="Contributors" asp-action="Index">Manage Contributors</a>          
             <div class="create-contributor-button">Add Contributor</div>
             <div class="create-contributor-output"></div>
         </div>
@@ -57,7 +56,7 @@
     @if (User.IsInRole("Editor in chief") || User.IsInRole("Editor"))
     {
         <div>
-            <p>Manage Articles</p>
+            <a asp-controller="Articles" asp-action="Index">Manage Articles</a>
         </div>
     }
     @if (User.IsInRole("Editor in chief") || User.IsInRole("Editor") || User.IsInRole("Writer"))

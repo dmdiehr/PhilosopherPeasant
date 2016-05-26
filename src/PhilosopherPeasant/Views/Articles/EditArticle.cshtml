@@ -18,11 +18,6 @@
 
     @Html.LabelFor(model => model.PublishDate)
     @Html.EditorFor(model => model.PublishDate)
-
-    @Html.LabelFor(model => model.ContributorId, "Contributor")
-    @Html.DropDownList("ContributorId")
-
-    <input type="submit" value="Add new task" />
 }
 
 @Html.ActionLink("Back", "Portal", "Home")

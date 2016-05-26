@@ -26,10 +26,30 @@ namespace PhilosopherPeasant.Controllers
             _db = context;
             _userManager = userManager;
         }
-        [AllowAnonymous]
-        public IActionResult Index()
+
+        [Authorize(Roles = "Editor in chief,Editor")]
+        public IActionResult Index(string subset)
         {
-            return View();
+            List<Article> articles;
+
+            if(subset=="approved")
+            {
+                articles = _db.Articles.Include(a => a.Contributor).Where(a => a.Approved == true).ToList();
+            }
+            if(subset=="rejected")
+            {
+                articles = _db.Articles.Include(a => a.Contributor).Where(a => a.Approved == false && a.Reviewed==true).ToList();
+            }
+            if(subset=="pending")
+            {
+                articles = _db.Articles.Include(a => a.Contributor).Where(a => a.Approved == false && a.Reviewed == false).ToList();
+            }
+            else
+            {
+                articles = _db.Articles.Include(a => a.Contributor).ToList();
+            }
+            
+            return View(articles);
         }
         public IActionResult CreateArticle()
         {
@@ -52,7 +72,7 @@ namespace PhilosopherPeasant.Controllers
         }
         public IActionResult EditArticle(int id)
         {
-            var thisArticle = _db.Articles.FirstOrDefault(x => x.ArticleId == id);
+            var thisArticle = _db.Articles.Include(a=>a.Contributor).FirstOrDefault(x => x.ArticleId == id);
             return View(thisArticle);
         }
 
